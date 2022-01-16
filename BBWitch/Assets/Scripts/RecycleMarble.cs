@@ -13,10 +13,8 @@ public class RecycleMarble : MonoBehaviour
             other.transform.position = new Vector3(0, 0, 100);
 
             recycleMarbles++;
-            if (recycleMarbles == ControlSystem.allMarbles) gm.SwitchTurn(false);
-            {
-
-            }
+            if (recycleMarbles == ControlSystem.maxMarbles) gm.SwitchTurn(false);
+           
         }
     }
 

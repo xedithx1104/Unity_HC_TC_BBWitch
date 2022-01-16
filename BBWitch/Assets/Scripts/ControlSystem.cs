@@ -21,7 +21,15 @@ public class ControlSystem : MonoBehaviour
     public List<GameObject> listMarbles = new List<GameObject>();
     [Header("祇甮丁筳"), Range(0, 5)]
     public float fireInterval = 0.5f;
+    // ┮Τ紆痌计秖
     public static int allMarbles;
+    // 祇甮程紆痌计秖
+    public static int maxMarbles = 2;
+    // 琌祇甮
+    public bool canShoot = true;
+    // –Ω祇甮紆痌计秖
+    public static int shootMarbles;
+
     #endregion
     #region ㄆン
     private void Start()
@@ -45,8 +53,14 @@ public class ControlSystem : MonoBehaviour
         listMarbles.Add(Instantiate(goMarbles, new Vector3(0, 0, 100), Quaternion.identity));
     }
     #endregion
+
+    /// <summary>
+    /// 菲公北
+    /// </summary>
     private void MouseControl()
     {
+        if (!canShoot) return;
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             goArrow.SetActive(true);
@@ -77,26 +91,34 @@ public class ControlSystem : MonoBehaviour
             }
             
 
-        }else if (Input.GetKeyUp(KeyCode.Mouse0))
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             StartCoroutine(FireMarble());
+            canShoot = false;
         }
  
 
     }
 
+    /// <summary>
+    /// 祇甮紆痌
+    /// </summary>
     private IEnumerator FireMarble()
     {
-            for (int i = 0; i < listMarbles.Count; i++)
-            {
-                GameObject temp = listMarbles[i];    //ネΘ紆痌
-                temp.transform.position = tranSpawPoint.position;
-                temp.transform.rotation = tranSpawPoint.rotation;
-                temp.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                temp.GetComponent<Rigidbody>().AddForce(tranSpawPoint.forward * speedShoot);                 //祇甮紆痌
-                yield return new WaitForSeconds(fireInterval);
-            }
-            goArrow.SetActive(false);
+        shootMarbles = 0;
+
+        for (int i = 0; i < maxMarbles; i++)
+        {
+            shootMarbles++;
+            GameObject temp = listMarbles[i];    //ネΘ紆痌
+            temp.transform.position = tranSpawPoint.position;
+            temp.transform.rotation = tranSpawPoint.rotation;
+            temp.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            temp.GetComponent<Rigidbody>().AddForce(tranSpawPoint.forward * speedShoot);                 //祇甮紆痌
+            yield return new WaitForSeconds(fireInterval);
+        }
+        goArrow.SetActive(false);
 
     }
     
