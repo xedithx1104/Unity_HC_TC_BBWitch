@@ -9,9 +9,9 @@ public class EnemyPropControl : MonoBehaviour
     private GameManager gm;
 
     [Header("每次移動的距離")]
-    public float moveDistance = 2;
+    public float moveDistance = 3.2f;
     [Header("移動的座標底線")]
-    public float moveUnderLine = -2;
+    public float moveUnderLine = 0.5f;
     [Header("彈珠的名稱")]
     public string nameMarble;
     [Header("血量")]
@@ -19,16 +19,17 @@ public class EnemyPropControl : MonoBehaviour
     [Header("是否有介面")]
     public bool hasUI;
 
-    private float hpMax;
-    private Image imgHp;
-    private Text textHp;
+    [SerializeField] private float hpMax;
+    [SerializeField] private Image imgHp;
+    [SerializeField] private Text textHp;
+
 
     private void Awake()
     {
         hpMax = hp;
 
         if (hasUI)
-        { 
+        {
             imgHp = transform.Find("畫布血條").Find("血條").GetComponent<Image>();
             textHp = transform.Find("畫布血條").Find("血量").GetComponent<Text>();
             textHp.text = hp.ToString();
@@ -43,8 +44,13 @@ public class EnemyPropControl : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        transform.position += Vector3.forward * moveDistance;
-        if (transform.position.z >= moveUnderLine) DestroyObject();
+        transform.position += Vector3.right * moveDistance;
+        gm.SwitchTurn(true);
+        if (transform.position.x >= moveUnderLine)
+        {
+            FindObjectOfType<ControlSystem>().GameOver(false);
+            DestroyObject();
+        }
     }
 
     /// <summary>
@@ -73,6 +79,11 @@ public class EnemyPropControl : MonoBehaviour
         if(gameObject.name.Contains("彈珠"))
         {
             ControlSystem.maxMarbles++;
+        }
+
+        if (!gameObject.name.Contains("彈珠"))
+        {
+            FindObjectOfType<ControlSystem>().AddScore();
         }
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -30,11 +31,20 @@ public class ControlSystem : MonoBehaviour
     // 每次發射出去的彈珠數量
     public static int shootMarbles;
 
+    public Text scoreText;
+
+    public GameObject endUI;
+
+    [SerializeField] private int score;
+    //父物件欄位
+    public Transform marbleParent;
+
     #endregion
     #region 事件
     private void Start()
     {
-        for (int i = 0; i < 2; i++)  SpawnMarble();
+        score = 0;
+        for (int i = 0; i < 50; i++)  SpawnMarble();
         
     }
 
@@ -50,9 +60,12 @@ public class ControlSystem : MonoBehaviour
     private void SpawnMarble()
     {
         allMarbles++;
-        listMarbles.Add(Instantiate(goMarbles, new Vector3(0, 0, 100), Quaternion.identity));
+        //所有彈珠清單.添加(生成彈珠)
+        GameObject marble = Instantiate(goMarbles, new Vector3(100, 0, 0), Quaternion.identity, marbleParent);
+        marble.name = "彈珠" + allMarbles;
+
+        listMarbles.Add(marble);
     }
-    #endregion
 
     /// <summary>
     /// 滑鼠控制
@@ -73,7 +86,7 @@ public class ControlSystem : MonoBehaviour
 
             // 射線 = 主要攝影機.螢幕座標轉射線(滑鼠座標)
             Ray rayMouse = Camera.main.ScreenPointToRay(v3Mouse);
-            // 設限碰撞資訊
+            // 射線碰撞資訊
             RaycastHit hit;
 
             // 如果 射線打到物件就處理
@@ -88,7 +101,7 @@ public class ControlSystem : MonoBehaviour
 
                 //角色的z軸 = 測試物件的座標 - 角色的座標(向量)
                 transform.forward = traTestMousePosition.position - transform.position;
-            }
+            }       
             
 
         }
@@ -121,6 +134,29 @@ public class ControlSystem : MonoBehaviour
         goArrow.SetActive(false);
 
     }
+
+    public void AddScore() 
+    { 
+        score++;
+        scoreText.text = $"SCORE : { score }";
+        if (score >= 10)
+        {
+            GameOver(true);
+        }
+    }
+
+    public void GameOver(bool isWin) 
+    {
+        endUI.SetActive(true);
+        Text text = endUI.GetComponentInChildren<Text>();
+
+        if (isWin) text.text = $"You\n Win";
+        else text.text = $"Game\n Over";
+
+        canShoot = false;
+        //StopAllCoroutines();
+    }
     
+    #endregion
 
 }

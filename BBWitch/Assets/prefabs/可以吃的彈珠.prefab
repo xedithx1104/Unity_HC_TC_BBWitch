@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8335366919273521495}
   - component: {fileID: 8335366919273521492}
   - component: {fileID: 8335366919273521493}
-  - component: {fileID: 5006470621407952005}
   - component: {fileID: 2175071235218153178}
-  m_Layer: 6
+  - component: {fileID: -8578521043494543185}
+  m_Layer: 0
   m_Name: "\u53EF\u4EE5\u5403\u7684\u5F48\u73E0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8335366919273521491}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: -14.94, y: 2, z: 17.884}
-  m_LocalScale: {x: 0.39999995, y: 0.4, z: 0.39999995}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -83,18 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5006470621407952005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8335366919273521491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a50e10a2c7e87df47a5dd29b1febd5e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &2175071235218153178
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -106,5 +94,25 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 3}
+  m_Size: {x: 3.2, y: 3.2, z: 3.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8578521043494543185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8335366919273521491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed35919db0a9a2846b87c8ab8d350706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDistance: 3.2
+  moveUnderLine: -4.65
+  nameMarble: "\u5F48\u73E0"
+  hp: 1
+  hasUI: 0
+  hpMax: 0
+  imgHp: {fileID: 0}
+  textHp: {fileID: 0}

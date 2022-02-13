@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RecycleMarble : MonoBehaviour
 {
+    // Μ紆痌计秖
     public static int recycleMarbles;
 
     public GameManager gm;
@@ -10,11 +11,17 @@ public class RecycleMarble : MonoBehaviour
         if (other.name.Contains("紆痌"))
         {
             other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            other.transform.position = new Vector3(0, 0, 100);
+            other.transform.position = new Vector3(100, 0, 0);
 
+
+            // Μ紆痌计秖糤
             recycleMarbles++;
-            if (recycleMarbles == ControlSystem.maxMarbles) gm.SwitchTurn(false);
-           
+            // 狦Μ计秖 单 ┮Τ紆痌计秖 ち传 寄よ
+            if (recycleMarbles != ControlSystem.shootMarbles) { return; }
+            
+            gm.SwitchTurn(false);
+
+            if (gm.monsterParent.childCount == 0) { gm.SwitchTurn(true); }
         }
     }
 
